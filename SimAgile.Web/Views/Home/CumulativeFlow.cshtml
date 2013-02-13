@@ -1,0 +1,9 @@
+﻿@model string
+
+<script src="@Url.Content("~/Scripts/SimAgile/cumulative.js")"></script>
+<div id="cumulativeFlow">
+</div>
+<script type="text/javascript">
+    var data = @Html.Raw(Model)
+    drawCumulativeFlow($("#cumulativeFlow")[0], data);
+</script>

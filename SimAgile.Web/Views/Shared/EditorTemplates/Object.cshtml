@@ -1,0 +1,31 @@
+﻿<div>
+	@foreach (var property in ViewData.ModelMetadata.Properties)
+	{
+		if (!property.ShowForEdit)
+		{
+			continue;
+		}
+		if (property.HideSurroundingHtml)
+		{
+			@Html.Editor(property.PropertyName, "Hidden")
+		}
+		else
+		{
+			<div class="control-group @if (!ViewData.ModelState.IsValidField(ViewData.TemplateInfo.GetFullHtmlFieldName(property.PropertyName))){<text>error</text>}">
+				<label class="control-label">@property.GetDisplayName()</label>
+                <small class="help-block">@property.Description</small>
+				<div class="controls">
+					@if (property.IsReadOnly)
+					{
+						<span class="uneditable-input">@string.Format(property.DisplayFormatString, property.Model)</span>
+					}
+					else
+					{
+						@Html.TextBox(property.PropertyName, property.Model, new {@class="input input-small"})
+						@Html.ValidationMessage(property.PropertyName, new {@class = "help-inline"})
+					}
+				</div>
+			</div>
+		}
+	}
+</div>

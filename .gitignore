@@ -1,0 +1,6 @@
+_ReSharper.*/
+*.user
+*.suo
+[Bb]in/
+[Oo]bj/
+[Db]ebug/

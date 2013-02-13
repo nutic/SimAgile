@@ -1,0 +1,22 @@
+﻿@model SimAgile.Core.SimulationParameters
+
+@{
+	ViewBag.Title = "SimAgile";
+}
+
+<div class="row">
+    @using(Html.BeginForm())
+    {
+        <div class="span3">
+            <input class="btn" type="submit" value="Build cumulative flow diagram"/>
+            <h3>Parameters</h3>
+            @Html.EditorForModel()
+        </div>
+    }
+    <div class="span9">
+        @Html.Action("CumulativeFlow")
+    </div>
+    <div class="span9">
+        @Html.Action("CycleTimeDistr")
+    </div>
+</div>
