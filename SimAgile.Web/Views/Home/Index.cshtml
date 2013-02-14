@@ -13,10 +13,19 @@
             @Html.EditorForModel()
         </div>
     }
-    <div class="span9">
-        @Html.Action("CumulativeFlow")
-    </div>
-    <div class="span9">
-        @Html.Action("CycleTimeDistr")
-    </div>
+	<div class="span9">
+		<div class="row">
+			<div class="span6">
+		    	@Html.Action("CumulativeFlow")
+			</div>
+			<div class="span3">
+				@Html.Action("Metrics")
+			</div>
+		</div>
+		<div class="row">
+			<div class="span6">
+                @Html.Action("CycleTimeDistr")
+			</div>
+		</div>
+	</div>
 </div>

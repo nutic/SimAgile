@@ -47,12 +47,20 @@ def run(parameters):
     class DayMonitor(Process):
         def __init__(self):
             self.log = dict(zip(states, map(lambda x: [], states)));
+            self.log["WIP"] = []
             return super(DayMonitor, self).__init__()
+
+        def _state(self, state):
+            return stores[state].nrBuffered
+
+        def _wip(self):
+            return len(filter(lambda us: (hasattr(us, 'startDate') and not hasattr(us, 'endDate')), work));
         
         def start(self):
             while (True):
                 for state in states:
-                    self.log[state].append(stores[state].nrBuffered)
+                    self.log[state].append(self._state(state))
+                self.log["WIP"].append(self._wip())
                 yield hold, self, 1;
 
     class Person(Process):
@@ -88,6 +96,14 @@ def run(parameters):
             self.state = 'None'
             self.changeStateDate = 0
             self.timeInState = {}
+            self.leadTime = None
+            self.cycleTime = None
+            self.createDate = None
+            self.startDate = None
+            self.endDate = None
+            
+            work.append(self)
+            
             return super(UserStory, self).__init__(name=name)
         
         def plan(self):
@@ -130,7 +146,13 @@ def run(parameters):
             return put, self, stores[state], [self]
 
         def short(self):
-            return {"name": self.name, "leadTime": self.leadTime, "cycleTime": self.cycleTime, "timeInState": self.timeInState }
+            return {"name": self.name,
+                    "leadTime": self.leadTime,
+                    "cycleTime": self.cycleTime,
+                    "timeInState": self.timeInState,
+                    "createDate": self.createDate,
+                    "startDate": self.startDate,
+                    "endDate": self.endDate }
 
     class ProcessDescription():
         def __init__(self, income, wip, outcome):
@@ -166,6 +188,7 @@ def run(parameters):
               "Testing",
               "Done"]
     stores = dict(zip(states, map(lambda x: Store(name=x), states)))
+    work = []
     process = {"Dev": ProcessDescription(
                                          #income=[stores["Reopen"], stores["Planned"]],
                                          income=["Planned"],
@@ -204,4 +227,4 @@ def run(parameters):
     # remove 'Done' state
     # del monitor.log[states[len(states)-1]]
     # states.remove(states[len(states)-1])
-    return {"states": states, "history": monitor.log, "done": map(lambda unit: unit.short(), stores["Done"].theBuffer)};
+    return {"states": states, "history": monitor.log, "work": map(lambda unit: unit.short(), work), "done": map(lambda unit: unit.short(), stores["Done"].theBuffer)};

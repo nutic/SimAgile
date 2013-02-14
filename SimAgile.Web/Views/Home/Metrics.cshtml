@@ -1,0 +1,15 @@
+﻿@model IEnumerable<SimAgile.Web.Models.MetricsModel>
+           
+<div class="metrics">
+<h4>Metrics</h4>
+    <table class="table table-condensed">
+	    @foreach(var m in Model)
+	    {
+		    <tr>
+			    <td>@m.Name</td>
+			    <td>@m.Value.ToString("0.##")</td>
+			    <td>@m.Unit</td>
+		    </tr>
+	    }
+    </table>
+</div>

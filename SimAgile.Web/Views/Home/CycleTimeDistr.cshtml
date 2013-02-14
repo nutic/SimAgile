@@ -1,9 +1,9 @@
 ﻿@model string
 
 <script src="@Url.Content("~/Scripts/SimAgile/timeDistr.js")"></script>
-<div id="devTimeDistr">
+<div id="timeDistr">
 </div>
 <script type="text/javascript">
     var data = @Html.Raw(Model);
-    drawDevTimeDistr($("#devTimeDistr")[0], data);
+    drawTimeDistr($("#timeDistr")[0], data);
 </script>
