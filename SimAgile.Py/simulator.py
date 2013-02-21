@@ -54,7 +54,7 @@ def run(parameters):
             return stores[state].nrBuffered
 
         def _wip(self):
-            return len(filter(lambda us: (hasattr(us, 'startDate') and not hasattr(us, 'endDate')), work));
+            return len(filter(lambda us: us.startDate is not None and us.endDate is None, work))
         
         def start(self):
             while (True):

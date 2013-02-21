@@ -22,11 +22,11 @@
    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <a class="brand" href="#">SimAgile</a>
+          <a class="brand">SimAgile</a>
 			<div class="nav-collapse collapse">
 				<ul class="nav">
 					<li><a href="@Url.Action("Index", "Home")">Home</a></li>
-					<li><a href="http://localhost/Prototype.CFD/">CFD prototyping</a></li>
+					<li>@Html.ActionLink("Sketches", "Index", "Sketches")</li>
 				</ul>
 			</div>
         </div>
